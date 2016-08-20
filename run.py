@@ -39,10 +39,9 @@ def listener(messages):
                 message_dispatched = dispatch(bot, chats, m.chat.id, m.text)
 
                 if not message_dispatched:
-                    logging.warning(
-                        u'Message is not dispatched (chat id - {0}) | message: {1}'.format(m.chat.id, m.text))
+                    logging.warning(u'Message is not dispatched (chat id - {0}) | message: {1}'.format(m.chat.id, m.text))
+                    send_error(m.chat.id)
 
-                send_error(m.chat.id)
             except Exception as e:
                 logging.error(u'Error by chat with id {0} | error: {1}'.format(m.chat.id, e))
                 send_error(m.chat.id)
