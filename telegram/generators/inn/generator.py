@@ -48,9 +48,9 @@ def _generate_kpp(start_kpp):
 
 def generate(params):
     random.seed()
-    if params.type == "ИНН ЮЛ":
+    if params.type == "ИНН_ЮЛ":
         return _generate_inn_for_juridical_person(params.inn)
-    elif params.type == "ИНН ИП":
+    elif params.type == "ИНН_ИП":
         return _generate_inn_for_self_employed_physical_person(params.inn)
     elif params.type == "ОГРН":
         return _generate_ogrn(params.inn)
