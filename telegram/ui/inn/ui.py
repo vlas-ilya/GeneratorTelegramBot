@@ -16,7 +16,7 @@ greetings = {
 
 
 menus = {
-    'inn_type': ['ЮЛ', 'ИП', 'Меню'],
+    'inn_type': ['ИНН ЮЛ', 'ИНН ИП', 'ОГРН', 'КПП', 'Меню'],
     'inn_start': ['Просто сделай это', 'Меню'],
 }
 
@@ -25,14 +25,13 @@ def dispatch(bot, chats, chat_id, command):
     key_board = ReplyKeyboardMarkup()
     command = command.strip()
     chat = chats.get(chat_id) if chats.get(chat_id) is not None else {}
-    if command.upper() == 'ИНН' or command.upper() == 'INN':
+    if command.upper() == 'ИНН/ОГРН/КПП' or command.upper() == 'INN':
         chat['processor'] = 'inn'
         key_board.add(*map(lambda text: KeyboardButton(text), menus.get('inn_type')))
         bot.send_message(chat_id=chat_id, text=greetings.get('inn_type'), reply_markup=key_board)
         chats[chat_id] = chat
         return True
     elif chat.get('processor') == 'inn' and chat.get('type') is None:
-        command = "ЮЛ" if command != "ЮЛ" and command != "ИП" else command
         chat["type"] = command
         key_board.add(*map(lambda text: KeyboardButton(text), menus.get('inn_start')))
         bot.send_message(chat_id=chat_id, text=greetings.get('inn_start'), reply_markup=key_board)

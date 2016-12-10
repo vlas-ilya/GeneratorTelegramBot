@@ -4,7 +4,7 @@
 import random
 
 
-def _generate_for_juridical_person(start_inn):
+def _generate_inn_for_juridical_person(start_inn):
     multipliers = [2, 4, 10, 3, 5, 9, 4, 6, 8]
     N10 = 0
     result = ""
@@ -15,7 +15,7 @@ def _generate_for_juridical_person(start_inn):
     return result + str(N10 % 11 % 10)
 
 
-def _generate_for_self_employed_physical_person(start_inn):
+def _generate_inn_for_self_employed_physical_person(start_inn):
     multipliers1 = [7, 2, 4, 10, 3, 5, 9, 4, 6, 8]
     multipliers2 = [3, 7, 2, 4, 10, 3, 5, 9, 4, 6, 8]
     n11 = 0
@@ -30,9 +30,29 @@ def _generate_for_self_employed_physical_person(start_inn):
     return result + str(n11 % 11 % 10) + str(n12 % 11 % 10)
 
 
+def _generate_ogrn(start_ogrn):
+    result = ""
+    for i in range(0, 12):
+        n = int(start_ogrn[i]) if len(start_ogrn) > i else random.randint(0, 9)
+        result += str(n)
+    return result + str(int(result) % 10)[-1]
+
+
+def _generate_kpp(start_kpp):
+    result = ""
+    for i in range(0, 9):
+        n = int(start_kpp[i]) if len(start_kpp) > i else random.randint(0, 9)
+        result += str(n)
+    return result
+
+
 def generate(params):
     random.seed()
-    if params.type == "ЮЛ":
-        return _generate_for_juridical_person(params.inn)
-    elif params.type == "ИП":
-        return _generate_for_self_employed_physical_person(params.inn)
+    if params.type == "ИНН ЮЛ":
+        return _generate_inn_for_juridical_person(params.inn)
+    elif params.type == "ИНН ИП":
+        return _generate_inn_for_self_employed_physical_person(params.inn)
+    elif params.type == "ОГРН":
+        return _generate_ogrn(params.inn)
+    elif params.type == "КПП":
+        return _generate_kpp(params.inn)
