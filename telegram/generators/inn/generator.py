@@ -35,7 +35,7 @@ def _generate_ogrn(start_ogrn):
     for i in range(0, 12):
         n = int(start_ogrn[i]) if len(start_ogrn) > i else random.randint(0, 9)
         result += str(n)
-    return result + str(int(result) % 10)[-1]
+    return result + str(int(result) % 11)[-1]
 
 
 def _generate_kpp(start_kpp):
