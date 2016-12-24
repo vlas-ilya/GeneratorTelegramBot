@@ -2,6 +2,7 @@
 
 
 import random
+import uuid
 
 
 def _generate_inn_for_juridical_person(start_inn):
@@ -30,7 +31,7 @@ def _generate_inn_for_self_employed_physical_person(start_inn):
     return result + str(n11 % 11 % 10) + str(n12 % 11 % 10)
 
 
-def _generate_ogrn(start_ogrn):
+def _generate_ogrn_juridical_person(start_ogrn):
     result = ""
     for i in range(0, 12):
         n = int(start_ogrn[i]) if len(start_ogrn) > i else random.randint(0, 9)
@@ -38,12 +39,12 @@ def _generate_ogrn(start_ogrn):
     return result + str(int(result) % 11)[-1]
 
 
-def _generate_kpp(start_kpp):
+def _generate_ogrn_juridical_employed_physical_person(start_ogrn):
     result = ""
-    for i in range(0, 9):
-        n = int(start_kpp[i]) if len(start_kpp) > i else random.randint(0, 9)
+    for i in range(0, 14):
+        n = int(start_ogrn[i]) if len(start_ogrn) > i else random.randint(0, 9)
         result += str(n)
-    return result
+    return result + str(int(result) % 13)[-1]
 
 
 def generate(params):
@@ -52,7 +53,12 @@ def generate(params):
         return _generate_inn_for_juridical_person(params.inn)
     elif params.type == "ИНН_ИП":
         return _generate_inn_for_self_employed_physical_person(params.inn)
-    elif params.type == "ОГРН":
-        return _generate_ogrn(params.inn)
-    elif params.type == "КПП":
-        return _generate_kpp(params.inn)
+    elif params.type == "ОГРН_ЮЛ":
+        return _generate_ogrn_juridical_person(params.inn)
+    elif params.type == "ОГРН_ИП":
+        return _generate_ogrn_juridical_employed_physical_person(params.inn)
+    elif params.type == "UUID":
+        return str(uuid.uuid4()).upper()
+    elif params.type == "UUID":
+        return str(uuid.uuid4())
+
