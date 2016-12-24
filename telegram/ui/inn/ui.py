@@ -31,6 +31,13 @@ def dispatch(bot, chats, chat_id, command):
         bot.send_message(chat_id=chat_id, text=greetings.get('inn_type'), reply_markup=key_board)
         chats[chat_id] = chat
         return True
+    elif chat.get('processor') == 'inn' and chat.get('type') is None and (command == 'uuid' or command == 'UUID'):
+        chat["type"] = command
+        chats[chat_id] = chat
+        key_board.add(*map(lambda text: KeyboardButton(text), main.menus.get('main')))
+        bot.send_message(chat_id=chat_id, text=generate(chat), reply_markup=key_board)
+        del chats[chat_id]
+        return True
     elif chat.get('processor') == 'inn' and chat.get('type') is None:
         chat["type"] = command
         key_board.add(*map(lambda text: KeyboardButton(text), menus.get('inn_start')))
@@ -38,10 +45,6 @@ def dispatch(bot, chats, chat_id, command):
         chats[chat_id] = chat
         return True
     elif chat.get('processor') == 'inn' and chat.get('type') is not None:
-        if chat["type"] == "ЮЛ" and len(command) > 8:
-            command = command[:8]
-        elif len(command) > 10:
-            command = command[:10]
         chat['inn'] = command
         chats[chat_id] = chat
         key_board.add(*map(lambda text: KeyboardButton(text), main.menus.get('main')))
