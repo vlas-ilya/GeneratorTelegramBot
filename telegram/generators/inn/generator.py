@@ -59,6 +59,6 @@ def generate(params):
         return _generate_ogrn_juridical_employed_physical_person(params.inn)
     elif params.type == "UUID":
         return str(uuid.uuid4()).upper()
-    elif params.type == "UUID":
+    elif params.type == "uuid":
         return str(uuid.uuid4())
 
