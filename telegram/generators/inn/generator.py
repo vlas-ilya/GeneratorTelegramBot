@@ -47,6 +47,12 @@ def _generate_ogrn_juridical_employed_physical_person(start_ogrn):
     return result + str(int(result) % 13)[-1]
 
 
+def _generate_uuid(count='1', upper=True):
+    count = int(count)
+    g = lambda _upper: str(uuid.uuid4()).upper() if _upper else str(uuid.uuid4())
+    return '\n'.join([g(upper) for _ in range(0, count)])
+
+
 def generate(params):
     random.seed()
     if params.type == "ИНН_ЮЛ":
@@ -58,7 +64,6 @@ def generate(params):
     elif params.type == "ОГРН_ИП":
         return _generate_ogrn_juridical_employed_physical_person(params.inn)
     elif params.type == "UUID":
-        return str(uuid.uuid4()).upper()
+        return _generate_uuid(params.inn, True)
     elif params.type == "uuid":
-        return str(uuid.uuid4())
-
+        return _generate_uuid(params.inn, False)

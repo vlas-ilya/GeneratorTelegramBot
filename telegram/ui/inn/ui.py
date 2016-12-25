@@ -12,12 +12,14 @@ from telegram.ui.main import ui as main
 greetings = {
     'inn_type': 'Выберите тип ИНН/ОГРН/КПП',
     'inn_start': 'Если необходимо, введите начало ИНН/ОГРН/КПП, и генератор его дополнит или исправит',
+    'uuid_start': 'Введите количество',
 }
 
 
 menus = {
     'inn_type': ['ИНН_ЮЛ', 'ИНН_ИП', 'ОГРН_ЮЛ', 'ОГРН_ИП', 'UUID', 'uuid', 'Меню'],
     'inn_start': ['Просто сделай это', 'Меню'],
+    'uuid_start': ['1', '5', '10', '20', 'Просто сделай это', 'Меню'],
 }
 
 
@@ -33,10 +35,9 @@ def dispatch(bot, chats, chat_id, command):
         return True
     elif chat.get('processor') == 'inn' and chat.get('type') is None and (command == 'uuid' or command == 'UUID'):
         chat["type"] = command
+        key_board.add(*map(lambda text: KeyboardButton(text), menus.get('uuid_start')))
+        bot.send_message(chat_id=chat_id, text=greetings.get('uuid_start'), reply_markup=key_board)
         chats[chat_id] = chat
-        key_board.add(*map(lambda text: KeyboardButton(text), main.menus.get('main')))
-        bot.send_message(chat_id=chat_id, text=generate(chat), reply_markup=key_board)
-        del chats[chat_id]
         return True
     elif chat.get('processor') == 'inn' and chat.get('type') is None:
         chat["type"] = command
