@@ -82,6 +82,8 @@ def dispatch(bot, chats, chat_id, command, message_id):
                               text=greetings.get('inn_start'),
                               reply_markup=key_board)
 
+        chat['message_id'] = message_id
+
         chats[chat_id] = chat
         return True
     elif chat.get('processor') == 'inn' and chat.get('type') is not None:

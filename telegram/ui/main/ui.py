@@ -10,12 +10,6 @@ from telebot.types import InlineKeyboardButton
 from telegram.generators.generator import generate
 
 
-import logging
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger()
-logger.setLevel(logging.DEBUG)
-
-
 greetings = {
     'start': 'GeneratorsBot - это набор наиболее часто используемых генераторов для различных задач.',
     'main': 'Выберите генератор',
