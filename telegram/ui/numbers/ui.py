@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 
-from telebot.types import ReplyKeyboardMarkup
-from telebot.types import KeyboardButton
+from telebot.types import InlineKeyboardMarkup
+from telebot.types import InlineKeyboardButton
 
 
 from telegram.generators.generator import generate
@@ -18,41 +18,108 @@ greetings = {
 }
 
 
-menus = {
-    'number_min': ['0', '1', '10', 'Просто сделай это', 'Меню'],
-    'number_max': ['10', '100', '1000', 'Просто сделай это', 'Меню'],
-    'number_count': ['1', '10', '100', 'Просто сделай это', 'Меню'],
-    'number_separator': ['Запятая', 'Пробел', 'Запятая с пробелом', 'Просто сделай это', 'Меню'],
-    'number_repeat': ['Да', 'Нет', 'Просто сделай это', 'Меню']
+buttons = {
+    'number_min': [
+        InlineKeyboardButton(text='0', callback_data='0'),
+        InlineKeyboardButton(text='1', callback_data='1'),
+        InlineKeyboardButton(text='10', callback_data='10'),
+        InlineKeyboardButton(text='Просто сделай это', callback_data='Просто сделай это')
+    ],
+    'number_max': [
+        InlineKeyboardButton(text='10', callback_data='10'),
+        InlineKeyboardButton(text='100', callback_data='100'),
+        InlineKeyboardButton(text='1000', callback_data='1000'),
+        InlineKeyboardButton(text='Просто сделай это', callback_data='Просто сделай это')
+    ],
+    'number_count': [
+        InlineKeyboardButton(text='1', callback_data='1'),
+        InlineKeyboardButton(text='10', callback_data='10'),
+        InlineKeyboardButton(text='100', callback_data='100'),
+        InlineKeyboardButton(text='Просто сделай это', callback_data='Просто сделай это')
+    ],
+    'number_separator': [
+        InlineKeyboardButton(text='Запятая', callback_data='Запятая'),
+        InlineKeyboardButton(text='Пробел', callback_data='Пробел'),
+        InlineKeyboardButton(text='Запятая с пробелом', callback_data='Запятая с пробелом'),
+        InlineKeyboardButton(text='Просто сделай это', callback_data='Просто сделай это')
+    ],
+    'number_repeat': [
+        InlineKeyboardButton(text='Да', callback_data='Да'),
+        InlineKeyboardButton(text='Нет',  callback_data='Нет'),
+        InlineKeyboardButton(text='Просто сделай это', callback_data='Просто сделай это')
+    ]
 }
 
 
-def dispatch(bot, chats, chat_id, command):
-    key_board = ReplyKeyboardMarkup()
+def dispatch(bot, chats, chat_id, command, message_id):
+
     command = command.strip()
     chat = chats.get(chat_id) if chats.get(chat_id) is not None else {}
+
     if command == 'Числа' or command == 'numbers':
         chat['processor'] = 'numbers'
-        key_board.add(*map(lambda text: KeyboardButton(text), menus.get('number_min')))
-        bot.send_message(chat_id=chat_id, text=greetings.get('number_min'), reply_markup=key_board)
+
+        key_board = InlineKeyboardMarkup(row_width=3)
+        key_board.add(*buttons.get('number_min'))
+
+        chat['message_id'] = message_id
+
+        bot.edit_message_text(chat_id=chat_id,
+                              message_id=message_id,
+                              text=greetings.get('number_min'),
+                              reply_markup=key_board)
+
         chats[chat_id] = chat
         return True
     elif chat.get('processor') == 'numbers' and chat.get('min') is None:
         chat['min'] = command
-        key_board.add(*map(lambda text: KeyboardButton(text), menus.get('number_max')))
-        bot.send_message(chat_id=chat_id, text=greetings.get('number_max'), reply_markup=key_board)
+
+        key_board = InlineKeyboardMarkup(row_width=3)
+        key_board.add(*buttons.get('number_max'))
+
+        if message_id is None:
+            message_id = chat['message_id']
+        chat['message_id'] = message_id
+
+        bot.edit_message_text(chat_id=chat_id,
+                              message_id=message_id,
+                              text=greetings.get('number_max'),
+                              reply_markup=key_board)
+
         chats[chat_id] = chat
         return True
     elif chat.get('processor') == 'numbers' and chat.get('max') is None:
         chat['max'] = command
-        key_board.add(*map(lambda text: KeyboardButton(text), menus.get('number_count')))
-        bot.send_message(chat_id=chat_id, text=greetings.get('number_count'), reply_markup=key_board)
+
+        key_board = InlineKeyboardMarkup(row_width=3)
+        key_board.add(*buttons.get('number_count'))
+
+        if message_id is None:
+            message_id = chat['message_id']
+        chat['message_id'] = message_id
+
+        bot.edit_message_text(chat_id=chat_id,
+                              message_id=message_id,
+                              text=greetings.get('number_count'),
+                              reply_markup=key_board)
+
         chats[chat_id] = chat
         return True
     elif chat.get('processor') == 'numbers' and chat.get('count') is None:
         chat['count'] = command
-        key_board.add(*map(lambda text: KeyboardButton(text), menus.get('number_separator')))
-        bot.send_message(chat_id=chat_id, text=greetings.get('number_separator'), reply_markup=key_board)
+
+        key_board = InlineKeyboardMarkup(row_width=3)
+        key_board.add(*buttons.get('number_separator'))
+
+        if message_id is None:
+            message_id = chat['message_id']
+        chat['message_id'] = message_id
+
+        bot.edit_message_text(chat_id=chat_id,
+                              message_id=message_id,
+                              text=greetings.get('number_separator'),
+                              reply_markup=key_board)
+
         chats[chat_id] = chat
         return True
     elif chat.get('processor') == 'numbers' and chat.get('separator') is None:
@@ -63,8 +130,19 @@ def dispatch(bot, chats, chat_id, command):
         elif command == 'Запятая с пробелом':
             command = 'spacecomma'
         chat['separator'] = command
-        key_board.add(*map(lambda text: KeyboardButton(text), menus.get('number_repeat')))
-        bot.send_message(chat_id=chat_id, text=greetings.get('number_repeat'), reply_markup=key_board)
+
+        key_board = InlineKeyboardMarkup(row_width=3)
+        key_board.add(*buttons.get('number_repeat'))
+
+        if message_id is None:
+            message_id = chat['message_id']
+        chat['message_id'] = message_id
+
+        bot.edit_message_text(chat_id=chat_id,
+                              message_id=message_id,
+                              text=greetings.get('number_repeat'),
+                              reply_markup=key_board)
+
         chats[chat_id] = chat
         return True
     elif chat.get('processor') == 'numbers' and chat.get('repeat') is None:
@@ -73,8 +151,22 @@ def dispatch(bot, chats, chat_id, command):
         elif command == 'Нет':
             command = '1'
         chat['repeat'] = command
-        key_board.add(*map(lambda text: KeyboardButton(text), main.menus.get('main')))
-        bot.send_message(chat_id=chat_id, text=generate(chat), reply_markup=key_board)
+
+        key_board = InlineKeyboardMarkup(row_width=1)
+        key_board.add(*main.buttons.get('end'))
+
+        if message_id is None:
+            message_id = chat['message_id']
+        chat['message_id'] = message_id
+
+        if chat.get('message_id') is not None:
+            del chat['message_id']
+
+        bot.edit_message_text(chat_id=chat_id,
+                              message_id=message_id,
+                              text='\n\n' + generate(chat) + '\n\n' + main.greetings['end'],
+                              reply_markup=key_board)
+
         del chats[chat_id]
         return True
     return False

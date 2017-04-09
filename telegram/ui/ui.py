@@ -14,18 +14,18 @@ import telegram.ui.text.ui as text
 
 
 dispatchers = [
-    lambda bot, chats, chat_id, command: main.dispatch(bot, chats, chat_id, command),
-    lambda bot, chats, chat_id, command: compliments.dispatch(bot, chats, chat_id, command),
-    lambda bot, chats, chat_id, command: facts.dispatch(bot, chats, chat_id, command),
-    lambda bot, chats, chat_id, command: inn.dispatch(bot, chats, chat_id, command),
-    lambda bot, chats, chat_id, command: jokes.dispatch(bot, chats, chat_id, command),
-    lambda bot, chats, chat_id, command: names.dispatch(bot, chats, chat_id, command),
-    lambda bot, chats, chat_id, command: numbers.dispatch(bot, chats, chat_id, command),
-    lambda bot, chats, chat_id, command: passwords.dispatch(bot, chats, chat_id, command),
-    lambda bot, chats, chat_id, command: quotes.dispatch(bot, chats, chat_id, command),
-    lambda bot, chats, chat_id, command: text.dispatch(bot, chats, chat_id, command)
+    lambda bot, chats, chat_id, command, message_id: main.dispatch(bot, chats, chat_id, command, message_id),
+    lambda bot, chats, chat_id, command, message_id: compliments.dispatch(bot, chats, chat_id, command, message_id),
+    lambda bot, chats, chat_id, command, message_id: facts.dispatch(bot, chats, chat_id, command, message_id),
+    lambda bot, chats, chat_id, command, message_id: inn.dispatch(bot, chats, chat_id, command, message_id),
+    lambda bot, chats, chat_id, command, message_id: jokes.dispatch(bot, chats, chat_id, command, message_id),
+    lambda bot, chats, chat_id, command, message_id: names.dispatch(bot, chats, chat_id, command, message_id),
+    lambda bot, chats, chat_id, command, message_id: numbers.dispatch(bot, chats, chat_id, command, message_id),
+    lambda bot, chats, chat_id, command, message_id: passwords.dispatch(bot, chats, chat_id, command, message_id),
+    lambda bot, chats, chat_id, command, message_id: quotes.dispatch(bot, chats, chat_id, command, message_id),
+    lambda bot, chats, chat_id, command, message_id: text.dispatch(bot, chats, chat_id, command, message_id)
 ]
 
 
-def dispatch(bot, chats, chat_id, command):
-    return any(dispatcher(bot, chats, chat_id, command) for dispatcher in dispatchers)
+def dispatch(bot, chats, chat_id, command, message_id=None):
+    return any(dispatcher(bot, chats, chat_id, command, message_id) for dispatcher in dispatchers)

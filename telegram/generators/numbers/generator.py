@@ -16,6 +16,8 @@ def _get_separator(separator):
         return ','
     elif separator == 'spacecomma':
         return ', '
+    else:
+        return separator
 
 
 def _try_get_unique_random(min_value, max_value, randoms):
