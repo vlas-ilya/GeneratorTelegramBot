@@ -8,7 +8,6 @@ from telebot.types import InlineKeyboardButton
 from src.generators.generator import generate
 from src.generators import ui as main
 
-
 greetings = {
     'passwords_count': 'Выберите колличество символов в пароле',
     'passwords_type': 'Выберите состав символов в пароле'

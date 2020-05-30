@@ -1,3 +1,6 @@
-.idea
-*.pyc
+**/scripts
+**/download
+**/mongo/data
+**/.idea
+**/venv
 **/.DS_Store
