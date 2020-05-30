@@ -1,0 +1,21 @@
+version: "2.0"
+
+services:
+  bot:
+    environment:
+      - BOT_MONGODB_HOST=mongodb
+      - BOT_MONGODB_PORT=27017
+      - 'PRODUCTION_TOKEN='
+      - 'TEST_TOKEN='
+    build: ""
+    links:
+      - mongodb
+    restart: always
+  mongodb:
+    build: ../generate_date
+    ports:
+      - '27017:27017'
+    volumes:
+      - './date/mongo/db:/data/db'
+      - './date/mongo/data:/opt/data'
+    restart: always
