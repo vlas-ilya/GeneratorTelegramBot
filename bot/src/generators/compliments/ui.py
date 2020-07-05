@@ -28,7 +28,6 @@ buttons = {
 }
 
 
-
 def dispatch(bot, chats, chat_id, command, message_id):
 
     command = command.strip()

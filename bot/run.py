@@ -9,7 +9,7 @@ from telebot.types import ReplyKeyboardMarkup
 
 from src import config
 from src.ui_dispatch import dispatch
-from src.generators import ui as main
+import src.generators.ui as main
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger()

@@ -1,9 +1,9 @@
 FROM mongo:3.2.6
 
-VOLUME ./mongo/db/ /data/db/
+COPY ./mongo/data/ /opt/data/
 
-VOLUME ./mongo/data/ /opt/data/
-
-RUN cd /opt/data/
+RUN cd /opt/data/ && \
+    mongod --fork --syslog --smallfiles && \
+    sh run.sh
 
 CMD ["mongod", "--smallfiles"]

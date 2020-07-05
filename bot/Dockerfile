@@ -1,8 +1,6 @@
-FROM python:3.3
+FROM python:3.8
 
 RUN pip install pyTelegramBotAPI
 RUN pip install pymongo
-
-VOLUME ./ /opt/app/
 
 CMD ["sh", "/opt/app/run.sh"]

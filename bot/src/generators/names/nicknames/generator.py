@@ -5,7 +5,7 @@ import random
 import math
 
 
-from src.generators.names.nicknames import prefix
+from src.generators.names.nicknames.prefixes import prefix
 from src.generators.names.nicknames.suffixes import suffix
 
 
