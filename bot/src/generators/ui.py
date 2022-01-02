@@ -41,7 +41,6 @@ buttons = {
         InlineKeyboardButton(text='Поделиться в VK', url='https://vk.com/share.php?url=https://telegram.me/gen_ru_bot?'),
         InlineKeyboardButton(text='Поделиться в Facebook', url='https://www.facebook.com/sharer.php?u=https://telegram.me/gen_ru_bot?'),
         InlineKeyboardButton(text='Поделиться в Twitter', url='https://twitter.com/intent/tweet?text=GeneratorsBot%20-%20это%20набор%20наиболее%20часто%20используемых%20генераторов%20для%20различных%20задач.%20https://telegram.me/gen_ru_bot&original_referer=?'),
-        InlineKeyboardButton(text='Лайкнуть на Storebot', url='https://storebot.me/bot/gen_ru_bot'),
         InlineKeyboardButton(text='Сгенерировать еще', callback_data='Поехали')
     ]
 }

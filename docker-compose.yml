@@ -4,14 +4,14 @@ services:
   mongodb:
     build: ./date
     ports:
-      - '27017:27017'
+      - '27018:27017'
     volumes:
       - './date/mongo/db:/data/db'
     restart: always
   bot:
     environment:
       - BOT_MONGODB_HOST=mongodb
-      - BOT_MONGODB_PORT=27017
+      - BOT_MONGODB_PORT=27018
       - 'PRODUCTION_TOKEN='
       - 'TEST_TOKEN='
     build: ./bot
